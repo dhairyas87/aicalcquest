@@ -1,9 +1,9 @@
 import React from "react";
 
 const Footer = () => {
-  return (
-    <footer className="py-6 px-8 bg-darkBg text-gray-400 text-center border-t border-gray-700">
-      © {new Date().getFullYear()} AI Calc Quest. All rights reserved.
+ return (
+    <footer className="footer">
+      <p>© 2025 AI Calc Quest. All rights reserved.</p>
     </footer>
   );
 };
