@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -21,6 +21,17 @@ const App = () => {
     t.title.toLowerCase().includes(search.toLowerCase())
   );
 
+  // add to App.jsx near top
+useEffect(() => {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("visible");
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+  return () => obs.disconnect();
+}, []);
+
   return (
     <>
       <Navbar onSearch={setSearch} />
@@ -31,8 +42,8 @@ const App = () => {
           element={
             <>
               <Hero />
-              <Carousel title="Tutorials" items={filteredTutorials} type="tutorial" />
-              <Carousel title="Blogs" items={filteredBlogs} type="blog" />
+              <Carousel title="Tutorials" items={tutorials} type="tutorial" />
+            <Carousel title="Blogs" items={blogs} type="blog" />
             </>
           }
         />
