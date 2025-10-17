@@ -80,30 +80,33 @@ export default function Carousel({ title, items = [], type = "blog" }) {
               }}
             >
               {extendedItems.map((item, i) => (
-                <div
-                  key={i}
-                  className="card"
-                  style={{ flex: `0 0 ${100 / visibleCount}%` }}
-                  onClick={() => handleSelect(item)}
-                >
-                  {item.thumbnail && (
+            <div
+                key={i}
+                className="card"
+                style={{ flex: `0 0 ${100 / visibleCount}%` }}
+                onClick={() => handleSelect(item)}
+            >
+                {item.thumbnail && (
+                <div className="thumb-container">
                     <img className="thumb" src={item.thumbnail} alt={item.title} />
-                  )}
-                  <div className="card-title">{item.title}</div>
-                  <div className="card-desc">{item.summary || item.description || ""}</div>
-                  <div className="card-footer">
-                    <a
-                      className="link"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSelect(item);
-                      }}
-                    >
-                      Open
-                    </a>
-                  </div>
                 </div>
-              ))}
+                )}
+                <div className="card-title">{item.title}</div>
+                <div className="card-desc">{item.summary || item.description || ""}</div>
+                <div className="card-footer">
+                <a
+                    className="link"
+                    onClick={(e) => {
+                    e.stopPropagation();
+                    handleSelect(item);
+                    }}
+                >
+                    Open
+                </a>
+                </div>
+            </div>
+            ))}
+
             </div>
           </div>
 

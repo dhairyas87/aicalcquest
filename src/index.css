@@ -199,7 +199,7 @@ nav.navbar {
   border-radius: 16px;
   background: rgba(15,23,36,0.6);
   padding: 16px;
-  min-height: 220px; /* same height for all */
+  min-height: 180px; /* same height for all */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -281,6 +281,19 @@ nav.navbar {
   .card { flex: 0 0 100%; min-height: 180px; }
   .carousel-arrow.prev { left: 2px; }
   .carousel-arrow.next { right: 2px; }
+}
+
+.thumb-container {
+  width: 100%;
+  height: auto; /* adjust height based on image */
+  margin-bottom: 12px;
+}
+
+.card .thumb {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
 }
 
 @media (min-width: 1400px) {
