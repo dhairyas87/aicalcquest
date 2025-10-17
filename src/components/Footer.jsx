@@ -9,6 +9,8 @@ const Footer = () => {
           Visit our YouTube Channel →
         </a>
       </p>
+
+       
     </footer>
   );
 };

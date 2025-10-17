@@ -9,7 +9,7 @@ const Navbar = ({ onSearch }) => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/tutorials">Tutorials</Link></li>
         <li><Link to="/blogs">Blogs</Link></li>
-        <li><a href="#about">About</a></li>
+        <li><Link to="/about">About</Link></li>
       </ul>
       <div className="nav-search">
         <input

@@ -204,6 +204,7 @@ nav.navbar {
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+   cursor: pointer; 
 }
 
 .card:hover {
@@ -300,13 +301,38 @@ nav.navbar {
   .card { flex: 0 0 calc((100% - 60px)/3); }
 }
 /* BLOG/TUTORIAL LIST PAGE */
-.page { max-width: 960px; margin: 36px auto; padding: 0 18px; }
-.page h2 { font-size: 2rem; color:#00e5ff; margin-bottom: 12px; }
-.page p { color:#cbd5e1; line-height:1.7; }
+
+
+
+.page {
+  min-height: calc(100vh - 120px); /* adjust 120px based on combined navbar + footer height */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 36px 18px;
+}
+
+.page h2 { margin-bottom: 16px; }
+.page p { margin-bottom: 24px; }
 
 /* VIDEO WRAPPER */
-.video-wrapper { width:100%; max-width:920px; margin: 18px auto 0; border-radius:12px; overflow:hidden; box-shadow: 0 8px 30px rgba(0,255,255,0.15); }
-.video-wrapper iframe { width:100%; height: 520px; border:0; }
+/* VIDEO WRAPPER */
+.video-wrapper {
+  width: 100%;
+  max-width: 920px;
+  margin: 24px auto;      /* centers the video horizontally */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,255,255,0.15);
+}
+
+.video-wrapper iframe {
+  width: 100%;
+  height: 520px;
+  border: 0;
+  display: block;         /* ensures iframe fills the wrapper */
+  margin: 0 auto;         /* extra safety for centering */
+}
 
 /* FOOTER */
 footer { background: rgba(12,18,30,0.85); color:#00e5ff; padding: 36px 0; text-align:center; backdrop-filter: blur(6px); margin-top:60px; }
@@ -317,3 +343,49 @@ footer { background: rgba(12,18,30,0.85); color:#00e5ff; padding: 36px 0; text-a
 
 /* helper spacing */
 .section-gap { height: 60px; }
+
+
+.about-page h2 {
+  font-size: 2rem;
+  color: #00e5ff;
+  margin-bottom: 16px;
+}
+
+.about-page p {
+  color: #cbd5e1;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.social-links {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.social-links h3 {
+  font-size: 1.2rem;
+  color: #00e5ff;
+  margin-bottom: 12px;
+}
+
+.social-links ul {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+}
+
+.social-links ul li a {
+  color: #00e5ff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.social-links ul li a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(0,229,255,0.6);
+}

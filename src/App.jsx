@@ -10,6 +10,8 @@ import TutorialList from "./pages/TutorialList";
 import TutorialDetail from "./pages/TutorialDetail";
 import { blogs } from "./data/blogs";
 import { tutorials } from "./data/tutorials";
+import ScrollToTop from "./components/ScrollToTop";
+import About from "./pages/About";
 
 const App = () => {
   const [search, setSearch] = useState("");
@@ -35,7 +37,7 @@ useEffect(() => {
   return (
     <>
       <Navbar onSearch={setSearch} />
-
+     <ScrollToTop />
       <Routes>
         <Route
           path="/"
@@ -51,6 +53,7 @@ useEffect(() => {
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/tutorials" element={<TutorialList />} />
         <Route path="/tutorial/:slug" element={<TutorialDetail />} />
+        <Route path="/about" element={<About />} />
       </Routes>
 
       <Footer />
