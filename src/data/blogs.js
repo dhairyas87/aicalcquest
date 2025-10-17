@@ -10,5 +10,17 @@ export const blogs = [
     summary: "Step-by-step breakdown of optimization in neural networks.",
     content:
       "Gradient Descent is an optimization algorithm that minimizes the loss function by iteratively moving in the direction of steepest descent..."
+  },
+   {
+    title: "Gradient Descent Explained",
+    summary: "Step-by-step breakdown of optimization in neural networks.",
+    content:
+      "Gradient Descent is an optimization algorithm that minimizes the loss function by iteratively moving in the direction of steepest descent..."
+  },
+   {
+    title: "Gradient Descent Explained",
+    summary: "Step-by-step breakdown of optimization in neural networks.",
+    content:
+      "Gradient Descent is an optimization algorithm that minimizes the loss function by iteratively moving in the direction of steepest descent..."
   }
 ];

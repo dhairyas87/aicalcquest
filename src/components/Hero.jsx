@@ -9,10 +9,14 @@ const Hero = () => {
         AI Calc Quest simplifies the math powering modern Artificial Intelligence —
         from Linear Algebra to Probability and Optimization.
       </p>
-      <div className="hero-buttons">
-        <Link to="/tutorials"><button>Start Tutorials</button></Link>
-        <Link to="/blogs"><button>Read Blogs</button></Link>
-      </div>
+    <div className="hero-buttons">
+  <Link to="/tutorials">
+    <button className="btn-primary">Start Tutorials</button>
+  </Link>
+  <Link to="/blogs">
+    <button className="btn-outline">Read Blogs</button>
+  </Link>
+</div>
     </section>
   );
 };
