@@ -1,68 +1,65 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-/**
- * Carousel
- * props:
- *   items: array of { title, summary, ... }
- *   type: "blog" | "tutorial"
- */
 export default function Carousel({ title, items = [], type = "blog" }) {
-  const trackRef = useRef(null);
-  const [pos, setPos] = useState(0); // index of first visible
-  const [visibleCount, setVisibleCount] = useState(3);
   const navigate = useNavigate();
+  const trackRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(3);
 
+  // Responsive visible cards
   useEffect(() => {
-    const onResize = () => {
+    const handleResize = () => {
       setVisibleCount(window.innerWidth <= 900 ? 1 : 3);
-      // clamp pos so we don't overflow
-      setPos((p) => Math.min(p, Math.max(0, items.length - (window.innerWidth <= 900 ? 1 : 3))));
     };
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [items.length]);
-
-  // Scroll reveal using IntersectionObserver for the whole carousel section
-  useEffect(() => {
-    const section = trackRef.current?.closest("section");
-    if (!section) return;
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) section.querySelectorAll(".reveal").forEach(n => n.classList.add("visible"));
-      });
-    }, { threshold: 0.12 });
-    obs.observe(section);
-    return () => obs.disconnect();
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const next = () => {
-    setPos((p) => {
-      const maxStart = Math.max(0, items.length - visibleCount);
-      return p >= maxStart ? 0 : p + visibleCount;
-    });
-  };
-
-  const prev = () => {
-    setPos((p) => {
-      const maxStart = Math.max(0, items.length - visibleCount);
-      return p <= 0 ? maxStart : Math.max(0, p - visibleCount);
-    });
-  };
-
   const handleSelect = (item) => {
-    // generate slug safely
-    const slug = (item.slug || item.title).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    const slug = (item.slug || item.title)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
     navigate(`/${type}/${slug}`);
   };
 
-  // compute visible slice (wrap-around support)
-  const visible = [];
-  for (let i = 0; i < visibleCount; i++) {
-    const idx = (pos + i) % items.length;
-    visible.push(items[idx]);
-  }
+  // Duplicate cards for infinite scroll
+  const extendedItems = [
+    ...items.slice(-visibleCount), // last N items
+    ...items,
+    ...items.slice(0, visibleCount), // first N items
+  ];
+
+  const next = () => setCurrentIndex((prev) => prev + 1);
+  const prev = () => setCurrentIndex((prev) => prev - 1);
+
+  // Handle seamless jump
+  useEffect(() => {
+    const handleTransitionEnd = () => {
+      const len = items.length;
+      if (currentIndex >= len + visibleCount) {
+        // Jump to start
+        trackRef.current.style.transition = "none";
+        setCurrentIndex(visibleCount);
+      } else if (currentIndex < visibleCount) {
+        // Jump to end
+        trackRef.current.style.transition = "none";
+        setCurrentIndex(items.length + visibleCount - 1);
+      }
+    };
+    const track = trackRef.current;
+    track.addEventListener("transitionend", handleTransitionEnd);
+    return () => track.removeEventListener("transitionend", handleTransitionEnd);
+  }, [currentIndex, items.length, visibleCount]);
+
+  // Re-enable transition after index change
+  useEffect(() => {
+    if (trackRef.current) {
+      trackRef.current.style.transition = "transform 0.5s ease";
+    }
+  }, [currentIndex]);
 
   return (
     <section className="section">
@@ -71,22 +68,46 @@ export default function Carousel({ title, items = [], type = "blog" }) {
           <h2>{title}</h2>
         </div>
 
-        <div className="carousel-wrapper reveal">
-          <button className="carousel-arrow prev" onClick={prev} aria-label="Previous">‹</button>
+        <div className="carousel-wrapper">
+          <button className="carousel-arrow prev" onClick={prev}>‹</button>
 
-          <div ref={trackRef} className="carousel-track" style={{ transform: `translateX(0)` }}>
-            {visible.map((it, i) => (
-              <div key={`${it.title}-${i}`} className="card" onClick={() => handleSelect(it)} role="button" tabIndex={0}>
-                <div className="card-title">{it.title}</div>
-                <div className="card-desc">{it.summary || it.description || ""}</div>
-                <div className="card-footer" style={{ marginTop: "auto" }}>
-                  <a className="link" onClick={(e)=>{ e.stopPropagation(); handleSelect(it); }}>Open</a>
+          <div className="carousel-track-wrapper">
+            <div
+              ref={trackRef}
+              className="carousel-track"
+              style={{
+                transform: `translateX(-${currentIndex * (100 / visibleCount)}%)`,
+              }}
+            >
+              {extendedItems.map((item, i) => (
+                <div
+                  key={i}
+                  className="card"
+                  style={{ flex: `0 0 ${100 / visibleCount}%` }}
+                  onClick={() => handleSelect(item)}
+                >
+                  {item.thumbnail && (
+                    <img className="thumb" src={item.thumbnail} alt={item.title} />
+                  )}
+                  <div className="card-title">{item.title}</div>
+                  <div className="card-desc">{item.summary || item.description || ""}</div>
+                  <div className="card-footer">
+                    <a
+                      className="link"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelect(item);
+                      }}
+                    >
+                      Open
+                    </a>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <button className="carousel-arrow next" onClick={next} aria-label="Next">›</button>
+          <button className="carousel-arrow next" onClick={next}>›</button>
         </div>
       </div>
     </section>
