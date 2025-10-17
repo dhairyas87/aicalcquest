@@ -1,15 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-export default function Navbar() {
+const Navbar = ({ onSearch }) => {
   return (
     <nav className="navbar">
-      <div className="logo">AI Calc Quest</div>
-      <ul className="nav-links">
+      <h1><Link to="/">AI Calc Quest</Link></h1>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/tutorials">Tutorials</Link></li>
+        <li><Link to="/blogs">Blogs</Link></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#tutorials">Tutorials</a></li>
-        <li><a href="#visualizers">Visualizers</a></li>
-        <li><a href="#blog">Blog</a></li>
       </ul>
+      <div className="nav-search">
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => onSearch(e.target.value)}
+        />
+      </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

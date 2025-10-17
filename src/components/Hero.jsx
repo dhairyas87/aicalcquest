@@ -1,9 +1,20 @@
-export default function Hero() {
+import React from "react";
+import { Link } from "react-router-dom";
+
+const Hero = () => {
   return (
-    <section className="hero">
-      <h1>Learn Math & AI with a Neon Dark Theme</h1>
-      <p>Dive into tutorials, visualizers, and blogs.</p>
-      <button>Explore Tutorials</button>
+    <section id="hero" className="hero">
+      <h1>Master the Math Behind AI</h1>
+      <p>
+        AI Calc Quest simplifies the math powering modern Artificial Intelligence —
+        from Linear Algebra to Probability and Optimization.
+      </p>
+      <div className="hero-buttons">
+        <Link to="/tutorials"><button>Start Tutorials</button></Link>
+        <Link to="/blogs"><button>Read Blogs</button></Link>
+      </div>
     </section>
   );
-}
+};
+
+export default Hero;

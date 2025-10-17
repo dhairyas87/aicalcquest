@@ -1,14 +1,12 @@
-// src/data/tutorials.js
-export const tutorialsData = [
+export const tutorials = [
   {
-    id: 1,
     title: "Linear Algebra Basics",
-    description: "Learn vectors, matrices, and transformations."
+    summary: "Matrix operations, determinants, and more.",
+    url: "https://www.youtube.com/embed/aircAruvnKk"
   },
   {
-    id: 2,
-    title: "Introduction to Python for AI",
-    description: "Learn Python fundamentals and AI libraries."
-  },
-  // Add more tutorials as needed
+    title: "Probability for AI",
+    summary: "Random variables, expectations, and Bayes’ theorem.",
+    url: "https://www.youtube.com/embed/2zTjWytAfhE"
+  }
 ];
